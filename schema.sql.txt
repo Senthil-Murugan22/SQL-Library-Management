@@ -1,0 +1,33 @@
+-- schema.sql: Contains table creation scripts
+
+-- Create Database
+CREATE DATABASE library_db;
+USE library_db;  -- For MySQL users
+
+-- Create Books Table
+CREATE TABLE books (
+    book_id INT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(255) NOT NULL,
+    author VARCHAR(100),
+    genre VARCHAR(50),
+    published_year INT
+);
+
+-- Create Members Table
+CREATE TABLE members (
+    member_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    join_date DATE DEFAULT (CURRENT_DATE)
+);
+
+-- Create Borrowed Books Table
+CREATE TABLE borrowed_books (
+    borrow_id INT PRIMARY KEY AUTO_INCREMENT,
+    book_id INT,
+    member_id INT,
+    borrow_date DATE DEFAULT (CURRENT_DATE),
+    return_date DATE,
+    FOREIGN KEY (book_id) REFERENCES books(book_id),
+    FOREIGN KEY (member_id) REFERENCES members(member_id)
+);
